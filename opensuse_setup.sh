@@ -1,62 +1,71 @@
-# refresh and update
-sudo zypper refresh && sudo zypper dup
+#!/bin/bash
+
+# === Refresh and upgrade system ===
+echo "Refreshing zypper and performing dist-upgrade..."
+sudo zypper refresh
+sudo zypper dup -y
 
 ###############
 ## dev stuff ##
 ###############
 
-# Setup Microsoft stuff (dotnet, vscode)
-sudo zypper install libicu
+echo "Installing Microsoft repo prerequisites..."
+sudo zypper install -y libicu
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
-wget https://packages.microsoft.com/config/opensuse/15/prod.repo
+
+echo "Setting up Microsoft repository..."
+wget -q https://packages.microsoft.com/config/opensuse/15/prod.repo
 sudo mv prod.repo /etc/zypp/repos.d/microsoft-prod.repo
 sudo chown root:root /etc/zypp/repos.d/microsoft-prod.repo
-sudo zypper addrepo https://packages.microsoft.com/yumrepos/vscode vscode
+sudo zypper addrepo -f https://packages.microsoft.com/yumrepos/vscode vscode
 sudo zypper refresh
 
-# Install dotnet-sdk and vs code
-sudo zypper install dotnet-sdk-9.0
-sudo zypper install code
+echo "Installing .NET SDK and Visual Studio Code..."
+sudo zypper install -y dotnet-sdk-9.0 code
 
-# Install go programming language
-sudo zypper install go
+echo "Installing Go..."
+sudo zypper install -y go
 
-# Install Java Development Kit
-sudo zypper install java-openjdk-25
+echo "Installing OpenJDK 25..."
+sudo zypper install -y java-openjdk-25
 
-# Install git
-sudo zypper install git
+echo "Installing Git..."
+sudo zypper install -y git
 
-# Install and setup docker
-zypper install docker docker-compose docker-compose-switch
-sudo systemctl enable docker
-sudo usermod -G docker -a $USER
-newgrp docker
-sudo systemctl restart docker
-docker run --rm hello-world
-docker images
-docker rmi -f IMAGE_ID
+echo "Installing Docker and Docker Compose..."
+sudo zypper install -y docker docker-compose docker-compose-switch
+sudo systemctl enable --now docker
+sudo usermod -aG docker "$USER"
+echo "Docker installed. Please log out and log back in for group changes to take effect."
 
-# Install node, angular
-sudo zypper install nodejs
+echo "Running Docker test container..."
+if docker run --rm hello-world; then
+  echo "Docker is working."
+else
+  echo "Docker test failed. Try rebooting or logging out/in, then run docker run --rm hello-world; again."
+fi
+
+echo "Installing Node.js and Angular CLI..."
+sudo zypper install -y nodejs
 sudo npm install -g @angular/cli
 
-# jetbrains: download jetbrains-toolbox from https://www.jetbrains.com/toolbox-app/
-# extract files, enter directory, execute ./jetbrains-toolbox
-# if this fails, chmod 755 jetbrains-toolbox
+echo "NOTE: Download JetBrains Toolbox manually from:"
+echo "https://www.jetbrains.com/toolbox-app/"
+echo "After download: chmod +x jetbrains-toolbox && ./jetbrains-toolbox"
 
-# Install virtualbox
-sudo zypper install virtualbox
+echo "Installing VirtualBox..."
+sudo zypper install -y virtualbox
 
 #################
 ## other stuff ##
 #################
 
-# Install Spotify Client: flathub
-# Install Discord
-sudo zypper install discord
+echo "Installing Discord..."
+sudo zypper install -y discord
 
-# Install zotero
-sudo zypper addrepo https://download.opensuse.org/repositories/home:MasterPatricko/openSUSE_Tumbleweed/home:MasterPatricko.repo
+echo "Installing Zotero..."
+sudo zypper addrepo -f https://download.opensuse.org/repositories/home:MasterPatricko/openSUSE_Tumbleweed/home:MasterPatricko.repo
 sudo zypper refresh
-sudo zypper install zotero
+sudo zypper install -y zotero
+
+echo "Setup complete! Please reboot if Docker or user group changes were made."
