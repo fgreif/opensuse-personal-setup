@@ -1,5 +1,7 @@
 #!/bin/bash
 
+read -n 1 -s -r -p "For use on openSUSE Tumbleweed ONLY. Press any key to continue..."
+
 # === Refresh and upgrade system ===
 echo "Refreshing zypper and performing dist-upgrade..."
 sudo zypper refresh
