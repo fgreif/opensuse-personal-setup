@@ -50,3 +50,6 @@ sudo npm install -g @angular/cli
 sudo zypper addrepo https://download.opensuse.org/repositories/home:MasterPatricko/openSUSE_Tumbleweed/home:MasterPatricko.repo
 sudo zypper refresh
 sudo zypper install zotero
+
+# Install virtualbox
+sudo zypper install virtualbox
