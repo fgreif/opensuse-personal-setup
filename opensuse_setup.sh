@@ -29,7 +29,7 @@ echo "Installing Go..."
 sudo zypper install -y go
 
 echo "Installing OpenJDK 25..."
-sudo zypper install -y java-openjdk-25
+sudo zypper install -y java-25-openjdk
 
 echo "Installing Git..."
 sudo zypper install -y git
