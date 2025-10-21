@@ -1,6 +1,10 @@
 # refresh and update
 sudo zypper refresh && sudo zypper dup
 
+###############
+## dev stuff ##
+###############
+
 # Setup Microsoft stuff (dotnet, vscode)
 sudo zypper install libicu
 sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
@@ -33,11 +37,6 @@ docker run --rm hello-world
 docker images
 docker rmi -f IMAGE_ID
 
-# Install Spotify Client: flathub
-
-# Install Discord
-sudo zypper install discord
-
 # Install node, angular
 sudo zypper install nodejs
 sudo npm install -g @angular/cli
@@ -46,10 +45,18 @@ sudo npm install -g @angular/cli
 # extract files, enter directory, execute ./jetbrains-toolbox
 # if this fails, chmod 755 jetbrains-toolbox
 
+# Install virtualbox
+sudo zypper install virtualbox
+
+#################
+## other stuff ##
+#################
+
+# Install Spotify Client: flathub
+# Install Discord
+sudo zypper install discord
+
 # Install zotero
 sudo zypper addrepo https://download.opensuse.org/repositories/home:MasterPatricko/openSUSE_Tumbleweed/home:MasterPatricko.repo
 sudo zypper refresh
 sudo zypper install zotero
-
-# Install virtualbox
-sudo zypper install virtualbox
